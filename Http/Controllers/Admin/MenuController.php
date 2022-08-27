@@ -34,7 +34,7 @@ class MenuController extends ResourceController
 
 
         // 테마에 적용할 메뉴를 설정합니다.
-        // setMenu("menus/1.json");
+        setMenu("menus/site.json");
     }
 
 

@@ -51,15 +51,16 @@ class MenusServiceProvider extends ServiceProvider
 
         // 메뉴트리를 출력합니다.
         Livewire::component('menu-json', \Modules\Menus\Http\Livewire\Menu::class);
+        Livewire::component('menu-sidebar', \Modules\Menus\Http\Livewire\Menu::class);
 
-        ## Livewire::component('WireTree', \Jiny\Menu\Http\Livewire\Admin\WireTree::class);
+
+
         Livewire::component('WireTreeDrag', \Modules\Menus\Http\Livewire\Admin\WireTreeDrag::class);
 
         // PopupForm을 상속 재구현한 tree 입력폼 처리루틴
         Livewire::component('PopupTreeFrom', \Modules\Menus\Http\Livewire\Admin\PopupTreeFrom::class);
-
         Livewire::component('WireUpload', \Modules\Menus\Http\Livewire\Admin\WireUpload::class);
-        //Livewire::component('Admin-SiteMenu-Code', \Jiny\Menu\Http\Livewire\Admin\MenuCodeWire::class);
+
     }
 
     /**
