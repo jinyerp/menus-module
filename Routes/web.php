@@ -6,14 +6,19 @@ use Illuminate\Support\Facades\Auth;
 
 
 // 관리자 접속 prefix 확인
-$prefix = admin_prefix();
+if(function_exists("admin_prefix")) {
+    $prefix = admin_prefix();
+} else {
+    $prefix = "_admin";
+}
+
 
 /** ----- ----- ----- ----- -----
  *  Site-Menu 관리자
  */
 Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
-->name('admin.site.')
-->prefix($prefix.'/site')->group(function () {
+->name('admin.')
+->prefix($prefix)->group(function () {
 
     Route::get('/menu',function(){
         return view('menus::admin.dashboard');
@@ -41,7 +46,7 @@ Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
  */
 Route::middleware(['web','auth:sanctum', 'verified'])
 ->name('admin.easy.')
-->prefix('/admin/easy')->group(function () {
+->prefix($prefix.'/easy')->group(function () {
 
     Route::resource('/menu/{menu_id}/items',
         \Modules\Menus\Http\Controllers\Admin\EasyMenuItem::class);
