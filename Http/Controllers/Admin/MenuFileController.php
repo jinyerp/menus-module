@@ -12,12 +12,19 @@ namespace Modules\Menus\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-use Jiny\Table\Http\Controllers\ResourceController;
-class MenuFileController extends ResourceController
+use Jiny\Table\Http\Controllers\FileController;
+class MenuFileController extends FileController
 {
     public function __construct()
     {
         parent::__construct();
         $this->setVisit($this);
+
+        $this->actions['path'] = "/resources/menus";
+        if(is_dir($this->actions['path'])) {
+            mkdir();
+        }
+
+        $this->actions['view_main'] = "menus::admin.files.main";
     }
 }

@@ -8,8 +8,20 @@
         @endif
         <!-- end -->
 
+        @if(Module::has('Files'))
+        <div class="flex space-x-2">
+            <div class="w-64 p-4 bg-white">
+                @livewire('Folder',['path'=>"/resources/menus"])
+            </div>
+            <div class="flex-1 p-4 bg-white">
+                @livewire('Files',['path'=>"/resources/menus"])
+            </div>
+        </div>
+        @else
+        <p>관리자 페이지에서 Files 모듈을 먼저 설치해 주세요.</p>
+        @endif
 
-
+        {{--
         <style>
             .directory ul {
                 padding-left: 15px;
@@ -51,6 +63,7 @@
 
         <!-- dropzone -->
         @include("jinyfile::script.drop")
+        --}}
 
 
 

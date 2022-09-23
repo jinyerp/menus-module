@@ -20,9 +20,8 @@ Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
 ->name('admin.')
 ->prefix($prefix)->group(function () {
 
-    Route::get('/menu',function(){
-        return view('menus::admin.dashboard');
-    });
+    ## 데쉬보드
+    Route::get('menu', [\Modules\Menus\Http\Controllers\Admin\Dashboard::class, "index"]);
 
     ## 메뉴 코드 관리
     Route::resource('menu/code', \Modules\Menus\Http\Controllers\Admin\MenuController::class);
@@ -30,11 +29,10 @@ Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
     ## 메뉴 아이템 설정
     Route::get('menu/{menu_id}/items',[\Modules\Menus\Http\Controllers\Admin\MenuItemController::class,"index"]);
 
-
-
     ## 메뉴 파일
     Route::resource('menu/file', \Modules\Menus\Http\Controllers\Admin\MenuFileController::class);
 
+    // test
     // fure css Modal test용
     Route::resource('modal/menu/code', \Modules\Menus\Http\Controllers\Admin\ModalMenuController::class);
 
