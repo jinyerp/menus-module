@@ -76,6 +76,8 @@ class WireUpload extends Component
         $maxid = DB::table('menu_items')->max('id');
         if(!$maxid) {
             $maxid = 1;
+        } else {
+            $maxid += 1;
         }
 
         

@@ -18,11 +18,13 @@ class Pos extends Controller
 {
     public function index()
     {
+       
         foreach($_POST['menu'] as $id => $menu) {
             DB::table('menu_items')
                 ->where('id', $id)
                 ->update($menu);
         }
+       
 
         return response()->json([
             'post'=>$_POST

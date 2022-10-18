@@ -37,14 +37,6 @@ Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
 ->name('admin.')
 ->prefix($prefix)->group(function () {
 
-    
-
-    
-
-    
-
-    
-
     // test
     // fure css Modal test용
     Route::resource('modal/menu/code', \Modules\Menus\Http\Controllers\Admin\ModalMenuController::class);
@@ -70,6 +62,6 @@ Route::middleware(['web','auth:sanctum', 'verified'])
  */
 Route::middleware(['web','auth:sanctum', 'verified'])
 ->prefix('/api')->group(function () {
-    Route::post('menu/pos',[\Modules\Menus\HTTP\API\Controllers\Pos::class,"index"]);
+    Route::post('menu/pos',[\Modules\Menus\Http\API\Controllers\Pos::class,"index"]);
 });
 
