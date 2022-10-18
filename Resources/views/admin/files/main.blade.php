@@ -8,12 +8,9 @@
         @endif
         <!-- end -->
 
-        @if(Module::has('Files'))
-        <div class="flex space-x-2">
-            <div class="w-64 p-4 bg-white">
-                @livewire('Folder',['path'=>"/resources/menus"])
-            </div>
-            <div class="flex-1 p-4 bg-white">
+        @if(is_module('Files'))
+        <div class="card">
+            <div class="card-body">
                 @livewire('Files',['path'=>"/resources/menus"])
             </div>
         </div>
@@ -21,53 +18,9 @@
         <p>관리자 페이지에서 Files 모듈을 먼저 설치해 주세요.</p>
         @endif
 
-        {{--
-        <style>
-            .directory ul {
-                padding-left: 15px;
-            }
-
-            .directory li {
-                padding: 10px 0px 0px 10px;
-                border-left-color: gray;
-                border-left-width: 1px;
-                margin-top: -1px;
-                border-top-color: #cccccc;
-                border-top-width: 1px;
-                border-top-style: dashed;
-            }
-        </style>
-
-
-        <x-card>
-            <x-card-header>
-                <ul class="p-0 m-0">
-                    <li class="float-left px-2">
-                        <a href="/admin/site/menus">Menu Code</a>
-                    </li>
-                    <li class="float-left px-2">
-                        <a href="/admin/site/menu/file">Json Files</a>
-                    </li>
-                </ul>
-            </x-card-header>
-            <x-card-body>
-
-                @livewire('FileExplore', [
-                    'actions' => $actions,
-                    'path' => '/resources/menus'
-                ])
-
-            </x-card-body>
-        </x-card>
-
-
-        <!-- dropzone -->
-        @include("jinyfile::script.drop")
-        --}}
-
-
-
-        @include('jinytable::setActionRule')
+        @if(isSuper())
+            @include('jinytable::setActionRule')
+        @endif
 
     </x-theme-layout>
 </x-theme>

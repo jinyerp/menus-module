@@ -1,7 +1,7 @@
 <div>
     <x-loading-indicator/>
 
-    {{-- 파일업로드 --}}
+    {{-- 메시지출력 --}}
     @if (session()->has('message'))
         <div class="alert alert-success">
             {{session('message')}}
@@ -14,6 +14,7 @@
                 Json 다운로드
             </x-button>
 
+            {{-- WireTreeDrag 의 메소드 호출 --}}
             <x-button primary wire:click="$emit('encodeToJson')">
                 Json 변환
             </x-button>

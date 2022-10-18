@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
  *  메뉴 목록을 관리합니다.
  */
 use Jiny\Table\Http\Controllers\ResourceController;
-class MenuController extends ResourceController
+class MenuCodeController extends ResourceController
 {
     public function __construct()
     {
@@ -34,14 +34,15 @@ class MenuController extends ResourceController
 
 
         // 테마에 적용할 메뉴를 설정합니다.
-        setMenu("menus/site.json");
+        //setMenu("menus/site.json");
     }
 
 
-    public function hookDeleting($row)
+    public function hookDeleting($wire, $row)
     {
+        //dd($row);
         // 메뉴 아이템을 같이 삭제합니다.
-        DB::table("menu_items")->where('menu_id', $row->id)->delete();
+        DB::table("menu_items")->where('menu_id', $row['id'])->delete();
         return $row;
     }
 

@@ -38,7 +38,7 @@
                 </x-form-hor>
 
                 <x-form-hor>
-                    <x-form-label>링그</x-form-label>
+                    <x-form-label>링크</x-form-label>
                     <x-form-item>
                         {!! xInputText()
                             ->setAttribute('name',"href")

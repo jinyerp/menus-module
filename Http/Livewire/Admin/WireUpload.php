@@ -15,17 +15,26 @@ use App\Models\MenuItems;
 
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 
 class WireUpload extends Component
 {
     use WithFileUploads;
     public $actions = [];
     public $menu_id;
+    public $user_id;
+
+    public function mount()
+    {
+        $this->user_id = Auth::user()->id;
+    }
+
 
     public function render()
     {
         return view("menus::livewire.upload");
     }
+
 
     /**
      * 파일 업로드
@@ -54,24 +63,46 @@ class WireUpload extends Component
         $this->emit('refeshTable');
     }
 
+
     private function decodeTo($filename)
     {
+        // menu json파일 읽기
         $path = storage_path('app/public');
         $json = file_get_contents($path.DIRECTORY_SEPARATOR.$filename);
+        $rows = json_decode($json, true);
 
-        $rows = json_decode($json,true);
 
+        // 마지막 id값 확인
         $maxid = DB::table('menu_items')->max('id');
+        if(!$maxid) {
+            $maxid = 1;
+        }
 
+        
+        // 계층 데이터를 1차원 배열로 변환
         $this->treeToRows($rows, $maxid);
+
+        // tree id값 재정렬
+        for($i=0;$i<count($this->rows);$i++) {
+            $id = $this->rows[$i]['id'];
+            $this->rows[$i]['id'] = $maxid;
+            for($j=0; $j<count($this->rows);$j++) {
+                if($this->rows[$j]['ref'] == $id) {
+                    $this->rows[$j]['ref'] = $maxid;
+                }
+            }
+            $maxid++;        
+        }
+
+        // 데이터 DB 삽입
+        $db = DB::table('menu_items')->insert($this->rows);
+
     }
 
     // 재귀호출
     private $rows = [];
     private function treeToRows($rows, $maxid)
     {
-        $db = DB::table('menu_items');
-
         foreach($rows as &$item) {
             $item['id'] += $maxid;
 
@@ -80,31 +111,39 @@ class WireUpload extends Component
                 $item['ref'] += $maxid;
             }
 
+            // 메뉴코드 Id값 변경
             $item['menu_id'] = $this->menu_id;
 
+            // 재귀호출
             if(isset($item['sub'])) {
                 $this->treeToRows($item['sub'], $maxid);
                 unset($item['sub']);
             }
 
-            unset($item['user_id']);
+            //unset($item['user_id']);
+            $item['user_id'] = $this->user_id;
 
-            $db->insert($item);
-        }
+            // 1차원 배열로 변환
+            $this->rows []= $item;
+        }        
     }
 
     /**
      * 파일 다운로드
-     *
      */
     public function export()
     {
-        session()->flash('message', "메뉴 설정 json 파일을 다운로드 합니다.");
-
-        $path = resource_path('menus');
-        $filePath = $path.DIRECTORY_SEPARATOR.$this->menu_id.".json";
-        if(file_exists($filePath)) {
-            return response()->download($filePath); // storage_path(storage_path())
-        }
+        $menuInfo = DB::table('menus')->where('id', $this->menu_id)->first();
+        if($menuInfo) {
+            $path = resource_path('menus');
+            $filePath = $path.DIRECTORY_SEPARATOR.$menuInfo->code.".json";
+            if(file_exists($filePath)) {
+                session()->flash('message', "메뉴 설정 json 파일을 다운로드 합니다.");
+                return response()->download($filePath); // storage_path(storage_path())
+            } else {
+                session()->flash('message', "먼저 json 변환후에 다운로드를 해야 합니다.");
+            }
+        }      
     }
+
 }

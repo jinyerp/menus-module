@@ -1,6 +1,7 @@
 {{-- 목록을 출력하기 위한 템플릿 --}}
 <x-theme theme="admin.sidebar">
     <x-theme-layout>
+
         <!-- Module Title Bar -->
         @if(Module::has('Titlebar'))
             @livewire('TitleBar', ['actions'=>$actions])
@@ -40,7 +41,7 @@
                 @livewire('WireTreeDrag',['menu_id'=>$request->menu_id, 'actions'=>$actions])
             </x-card-body>
             <x-card-footer>
-                {{-- 업로드  --}}
+                {{-- 메뉴 json 업로드  --}}
                 @livewire('WireUpload',['menu_id'=>$request->menu_id])
             </x-card-footer>
         </x-card>
@@ -48,7 +49,6 @@
 
         {{-- create/update/delete 처리 --}}
         @livewire('PopupTreeFrom', ['menu_id'=>$request->menu_id, 'actions'=>$actions])
-
 
         @livewire('Popup-LiveManual')
 
@@ -71,7 +71,13 @@
             });
         </script>
         @endpush
-        @livewire('setActionRule', ['actions'=>$actions])
+        
+        
+        @if(isSuper())
+            @livewire('setActionRule', ['actions'=>$actions])
+        @endif
+
+        
 
     </x-theme-layout>
 </x-theme>

@@ -32,8 +32,8 @@ class MenuItemController extends ResourceController
         // 메인화면을 재지정합니다.
         $this->actions['view_main'] = "menus::admin.menu_item.main";
 
-        //$this->actions['view_title'] = "menus::admin.menu_code.title";
-        //$this->actions['view_filter'] = "menus::admin.menu_code.filter";
+        //$this->actions['view_title'] = "Menus::admin.menu_code.title";
+        //$this->actions['view_filter'] = "Menus::admin.menu_code.filter";
         $this->actions['view_list'] = "menus::admin.menu_item.tree";
         $this->actions['view_form'] = "menus::admin.menu_item.form";
 

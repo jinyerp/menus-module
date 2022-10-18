@@ -18,19 +18,32 @@ if(function_exists("admin_prefix")) {
  */
 Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
 ->name('admin.')
-->prefix($prefix)->group(function () {
-
+->prefix("jiny/".$prefix)->group(function () {
     ## 데쉬보드
     Route::get('menu', [\Modules\Menus\Http\Controllers\Admin\Dashboard::class, "index"]);
 
     ## 메뉴 코드 관리
-    Route::resource('menu/code', \Modules\Menus\Http\Controllers\Admin\MenuController::class);
+    Route::resource('menu/code', \Modules\Menus\Http\Controllers\Admin\MenuCodeController::class);
 
     ## 메뉴 아이템 설정
     Route::get('menu/{menu_id}/items',[\Modules\Menus\Http\Controllers\Admin\MenuItemController::class,"index"]);
 
     ## 메뉴 파일
     Route::resource('menu/file', \Modules\Menus\Http\Controllers\Admin\MenuFileController::class);
+});
+
+
+Route::middleware(['web','auth:sanctum', 'verified', 'admin'])
+->name('admin.')
+->prefix($prefix)->group(function () {
+
+    
+
+    
+
+    
+
+    
 
     // test
     // fure css Modal test용

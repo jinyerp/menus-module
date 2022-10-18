@@ -21,6 +21,8 @@ class WireTreeDrag extends Component
 
     public function render()
     {
+
+
         ## 메뉴코드 정보를 읽어 옵니다.
         $code = DB::table('menus')->where('id',$this->menu_id)->first();
         if ($code) {
@@ -36,6 +38,9 @@ class WireTreeDrag extends Component
                 // index로 변환하여 전달함.
                 $this->tree []= $tree;
             }
+
+
+            
 
             return view($this->actions['view_list'])
                 ->with([
@@ -126,12 +131,14 @@ class WireTreeDrag extends Component
         // 객체 json 변환
         $json = json_encode($this->tree,  JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
+        // 코드명으로 json 파일 저장
         $menuInfo = DB::table('menus')->where('id', $this->menu_id)->first();
         if($menuInfo) {
             $filename = $path.DIRECTORY_SEPARATOR.$menuInfo->code.".json";
             file_put_contents($filename, $json);
         }
 
+        // id값으로 json파일 저장
         file_put_contents($path.DIRECTORY_SEPARATOR.$this->menu_id.".json", $json);
     }
 
