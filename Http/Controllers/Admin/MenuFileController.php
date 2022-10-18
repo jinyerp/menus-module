@@ -20,10 +20,12 @@ class MenuFileController extends FileController
         parent::__construct();
         $this->setVisit($this);
 
+        /*
         $this->actions['path'] = "/resources/menus";
         if(is_dir($this->actions['path'])) {
             mkdir();
         }
+        */
 
         $this->actions['view_main'] = "menus::admin.files.main";
     }

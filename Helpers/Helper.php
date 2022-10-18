@@ -98,3 +98,19 @@ if (!function_exists('xEnableText')) {
 }
 
 
+if (!function_exists('menu_code_count')) {
+    function menu_code_count()
+    {
+        return DB::table('menus')->count();
+    }    
+}
+
+if (!function_exists('menu_file_count')) {
+    function menu_file_count()
+    {
+        $path = resource_path('menus');
+        if(is_dir($path)) {
+            return count( scandir($path) ) - 2;
+        }
+    }    
+}
