@@ -8,6 +8,7 @@
  */
 
 namespace Modules\Menus\Http;
+use Illuminate\Support\Facades\DB;
 
 /**
  *  메뉴 헬퍼 클래스
@@ -36,11 +37,51 @@ class Menu
     public $path;
     public $tree;
     public $menu_id;
+    public $menu_code;
+    public $menu=[];
 
     public function setPath($path)
     {
         $this->path = $path;
         return $this;
+    }
+
+    public function setMenuId($id)
+    {
+        $row = DB::table('menus')->where('id', $id)->first();
+        if($row) {
+            $this->menu_code = $row->code;
+            foreach($row as $key => $value) {
+                $this->menu[$key] = $value;
+            }
+        }
+
+        $this->menu_id = $id;
+        return $this;
+    }
+
+    public function getMenuId()
+    {
+        return $this->menu_id;
+    }
+
+    public function setMenuCode($code)
+    {
+        $row = DB::table('menus')->where('code', $code)->first();
+        if($row) {
+            $this->menu_id = $row->id;
+            foreach($row as $key => $value) {
+                $this->menu[$key] = $value;
+            }
+        }
+
+        $this->menu_code = $code;
+        return $this;
+    }
+
+    public function getMenuCode()
+    {
+        return $this->menu_code;
     }
 
     // json 파일 읽기
