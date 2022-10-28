@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\DB;
  *  Admin Page
  *  메뉴 목록을 관리합니다.
  */
-use Jiny\Table\Http\Controllers\ResourceController;
-class MenuCodeController extends ResourceController
+use Jiny\Table\Http\Controllers\AdminController;
+class MenuCodeController extends AdminController
 {
     public function __construct()
     {
@@ -31,6 +31,7 @@ class MenuCodeController extends ResourceController
         $this->actions['view_filter'] = "menus::admin.menu_code.filter";
         $this->actions['view_list'] = "menus::admin.menu_code.list";
         $this->actions['view_form'] = "menus::admin.menu_code.form";
+
 
 
         // 테마에 적용할 메뉴를 설정합니다.

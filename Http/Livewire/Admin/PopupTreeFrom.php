@@ -13,8 +13,9 @@ use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use App\Models\MenuItems;
 
-use Jiny\Table\Http\Livewire\PopupForm;
-class PopupTreeFrom extends PopupForm
+//use Jiny\Table\Http\Livewire\PopupForm;
+use Jiny\Table\Http\Livewire\LivewireFormPopup;
+class PopupTreeFrom extends LivewireFormPopup
 {
     public $menu_id;
 
@@ -33,12 +34,15 @@ class PopupTreeFrom extends PopupForm
             $this->forms['ref'] = 0; // 루트는 ref값이 0 입니다
         }
 
+
         return parent::create();
     }
 
     ## 오버라이딩 메소드
     public function store()
     {
+        //dd($this->forms);
+
         // 서브메뉴 트리 입력
         if($this->forms['ref'] !=0) {
             $ref = $this->refRow($this->forms['ref']);
