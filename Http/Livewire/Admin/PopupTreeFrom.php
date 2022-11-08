@@ -13,16 +13,22 @@ use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use App\Models\MenuItems;
 
-//use Jiny\Table\Http\Livewire\PopupForm;
+
 use Jiny\Table\Http\Livewire\LivewireFormPopup;
 class PopupTreeFrom extends LivewireFormPopup
 {
     public $menu_id;
 
     ## 오버라이딩 메소드
+    public function popupFormCreate($value=null)
+    {
+        // create 메소드를 호출합니다.        
+        return $this->create($value);
+    }
+
+    ## 오버라이딩 메소드
     public function create($ref=null)
     {
-
         // 메뉴코드
         $this->forms['menu_id'] = intval($this->menu_id);
 
@@ -34,8 +40,8 @@ class PopupTreeFrom extends LivewireFormPopup
             $this->forms['ref'] = 0; // 루트는 ref값이 0 입니다
         }
 
-
-        return parent::create();
+        // 폼 초기화를 하지 않는 create 메소드호출
+        return parent::createRef();
     }
 
     ## 오버라이딩 메소드
