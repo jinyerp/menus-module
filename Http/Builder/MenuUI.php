@@ -22,14 +22,6 @@ abstract class MenuUI
     public function __construct($css=[])
     {
         // 메뉴 데이터를 설정합니다.
-        /*
-        if ($data) {
-            $this->menu = $data;
-        }
-        */
-
-
-
         if(empty($css)) {
             $this->css['sidebar_header'] = "sidebar-header";
             $this->css['sidebar-item'] = "sidebar-item";
@@ -85,9 +77,18 @@ abstract class MenuUI
             if(isset($value['header']) && $value['header']) {
                 $item = $this->menuHeader($value);
             } else {
-                $item = $this->menuItem($value);
+                if(isset($value['modules']) && $value['modules']) {
+                    if(is_module($value['modules'])) {
+                        $item = $this->menuItem($value);
+                    } else {
+                        //$item = "모듈 없음";
+                    }
+                } else {
+                    $item = $this->menuItem($value);
+                }             
             }
 
+            // 메뉴추가
             $menu->add($item);
         }
 
